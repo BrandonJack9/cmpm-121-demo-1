@@ -1,16 +1,11 @@
 import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
-
 let counter: number = 0;
+let growthRate: number = 1;
+
 const gameName = "Brandon's Game";
 const buttonName = "🍆";
-
-function increaseCounter() {
-  counter++;
-
-  log.innerHTML = `Number of fruit: ${counter}`;
-}
 
 document.title = gameName;
 
@@ -20,14 +15,24 @@ app.append(header);
 
 const button = document.createElement("Button");
 button.innerHTML = buttonName;
-button.addEventListener("click", increaseCounter);
+button.addEventListener("click", () => {
+  counter++;
+});
 app.append(button);
 
-setInterval(() => {
-  counter++;
-  log.innerHTML = `Number of Fruit: ${counter}`;
-}, 1000);
+let lastMillis = 0;
 
 const log = document.createElement("p");
-log.innerHTML = `Number of Fruit: ${counter}`;
+log.innerHTML = `No fruit!`;
 app.append(log);
+
+function tick(millis: number) {
+  const delta = millis - lastMillis;
+  lastMillis = millis;
+
+  counter += (growthRate * delta) / 1000;
+  log.innerHTML = `Number of fruit: ${counter.toFixed(2)}`;
+  requestAnimationFrame(tick);
+}
+
+requestAnimationFrame(tick);
