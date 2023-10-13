@@ -23,6 +23,11 @@ button.innerHTML = buttonName;
 button.addEventListener("click", increaseCounter);
 app.append(button);
 
+setInterval(() => {
+  counter++;
+  log.innerHTML = `Number of Fruit: ${counter}`;
+}, 1000);
+
 const log = document.createElement("p");
 log.innerHTML = `Number of Fruit: ${counter}`;
 app.append(log);
