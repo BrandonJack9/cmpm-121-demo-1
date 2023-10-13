@@ -2,7 +2,7 @@ import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 let counter: number = 0;
-let growthRate: number = 1;
+const growthRate: number = 1;
 
 const gameName = "Brandon's Game";
 const buttonName = "🍆";
