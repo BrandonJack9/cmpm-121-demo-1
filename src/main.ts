@@ -25,15 +25,17 @@ app.append(startButton);
 app.append(document.createElement("div"));
 
 let gremlins = 0;
+let gremlinCost = 10;
 const honorGuardButton = document.createElement("button");
-honorGuardButton.innerHTML = `<font size = "+2">👹</font><br>Gremlins: ${gremlins}`;
+honorGuardButton.innerHTML = `<font size = "+2">👹</font><br>Gremlins: ${gremlins}<br>Gremlin price: ${gremlinCost}`;
 honorGuardButton.disabled = true;
 
 honorGuardButton.addEventListener("click", () => {
+  gremlinCost *= 1.15;
   gremlins++;
   growthRate += 0.1;
-  if (counter >= 10) {
-    counter -= 10;
+  if (counter >= gremlinCost) {
+    counter -= gremlinCost;
     log.innerHTML = `Number of warriors: ${counter.toFixed(2)}`;
   }
 });
@@ -41,15 +43,17 @@ honorGuardButton.addEventListener("click", () => {
 app.append(honorGuardButton);
 
 let goblins = 0;
+let goblinCost = 100;
 const goblinButton = document.createElement("button");
 goblinButton.disabled = true;
-goblinButton.innerHTML = `<font size = "+2">👺</font><br>Goblins: ${goblins}`;
+goblinButton.innerHTML = `<font size = "+2">👺</font><br>Goblins: ${goblins}<br>Goblin price: ${goblinCost}`;
 
 goblinButton.addEventListener("click", () => {
+  goblinCost *= 1.15;
   goblins++;
   growthRate += 2;
-  if (counter >= 100) {
-    counter -= 100;
+  if (counter >= goblinCost) {
+    counter -= goblinCost;
     log.innerHTML = `Number of warriors: ${counter.toFixed(2)}`;
   }
 });
@@ -57,15 +61,17 @@ goblinButton.addEventListener("click", () => {
 app.append(goblinButton);
 
 let skeletons = 0;
+let skeletonCost = 1000;
 const skeletonButton = document.createElement("button");
-skeletonButton.innerHTML = `<font size = "+2">💀</font><br>Skeletons: ${skeletons}`;
+skeletonButton.innerHTML = `<font size = "+2">💀</font><br>Skeletons: ${skeletons}<br>Skeleton price: ${skeletonCost}`;
 skeletonButton.disabled = true;
 
 skeletonButton.addEventListener("click", () => {
+  skeletonCost *= 1.15;
   skeletons++;
   growthRate += 50;
-  if (counter >= 1000) {
-    counter -= 1000;
+  if (counter >= skeletonCost) {
+    counter -= skeletonCost;
     log.innerHTML = `Number of warriors: ${counter.toFixed(2)}`;
   }
 });
@@ -84,19 +90,25 @@ app.append(rate);
 function tick(millis: number) {
   const delta = millis - lastMillis;
   lastMillis = millis;
-  if (counter >= 10) {
+  if (counter >= gremlinCost) {
     honorGuardButton.disabled = false;
   } else honorGuardButton.disabled = true;
-  if (counter >= 100) {
+  if (counter >= goblinCost) {
     goblinButton.disabled = false;
   } else goblinButton.disabled = true;
-  if (counter >= 1000) {
+  if (counter >= skeletonCost) {
     skeletonButton.disabled = false;
   } else skeletonButton.disabled = true;
   counter += (growthRate * delta) / 1000;
-  goblinButton.innerHTML = `<font size = "+2">👺</font><br>Goblins: ${goblins}`;
-  honorGuardButton.innerHTML = `<font size = "+2">👹</font><br>Gremlins: ${gremlins}`;
-  skeletonButton.innerHTML = `<font size = "+2">💀</font><br>Skeletons: ${skeletons}`;
+  honorGuardButton.innerHTML = `<font size = "+2">👹</font><br>Gremlins: ${gremlins}<br>Gremlin price: ${gremlinCost.toFixed(
+    2,
+  )}`;
+  goblinButton.innerHTML = `<font size = "+2">👺</font><br>Goblins: ${goblins}<br>Goblin price: ${goblinCost.toFixed(
+    2,
+  )}`;
+  skeletonButton.innerHTML = `<font size = "+2">💀</font><br>Skeletons: ${skeletons}<br>Skeleton price: ${skeletonCost.toFixed(
+    2,
+  )}`;
   log.innerHTML = `Number of warriors: ${counter.toFixed(2)}`;
   rate.innerHTML = `${growthRate.toFixed(2)} warriors joining per second`;
   requestAnimationFrame(tick);
