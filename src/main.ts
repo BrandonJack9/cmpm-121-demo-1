@@ -6,8 +6,6 @@ let growthRate: number = 0;
 
 const gameName = "Satan's Army";
 const incrementDemons = "😈";
-const honorGuard = "👹";
-const skeleton = "💀";
 
 document.title = gameName;
 
@@ -80,7 +78,7 @@ const log = document.createElement("p");
 log.innerHTML = `No Warriors!`;
 app.append(log);
 
-let rate = document.createElement("div");
+const rate = document.createElement("div");
 app.append(rate);
 
 function tick(millis: number) {
