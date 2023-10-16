@@ -37,12 +37,14 @@ function incrementDemonCount(level: number) {
 
 interface Warrior {
   name: string;
+  description: string;
   cost: number;
   rate: number;
   icon: string;
 }
 
 class incrementDemons {
+  description: string;
   cost: number;
   rate: number;
   name: string;
@@ -50,7 +52,14 @@ class incrementDemons {
   amount: number;
   button: HTMLButtonElement;
 
-  constructor(cost: number, rate: number, name: string, icon: string) {
+  constructor(
+    cost: number,
+    rate: number,
+    name: string,
+    icon: string,
+    description: string,
+  ) {
+    this.description = description;
     this.cost = cost;
     this.rate = rate;
     this.name = name;
@@ -71,6 +80,7 @@ class incrementDemons {
     this.button.innerHTML = `
       <font size="+2">${this.icon}</font><br>
       ${this.name}<br>
+      ${this.description}<br>
       ${this.cost.toFixed(0)} warriors of the damned<br>
        Amount: ${this.amount}`;
   }
@@ -79,21 +89,39 @@ class incrementDemons {
 const availableWarriors: Warrior[] = [
   {
     name: "Gremlin",
+    description: "A little furry demon with no armor",
     cost: 10,
     rate: 0.1,
     icon: "👹",
   },
   {
     name: "Goblin",
+    description: "A plucky demon with thick skin and light armor",
     cost: 100,
     rate: 2,
     icon: "👺",
   },
   {
     name: "Skeleton",
+    description: "A strong warrior demon with heavy armor",
     cost: 1000,
     rate: 50,
     icon: "💀",
+  },
+  {
+    name: "Vampire",
+    description: "A powerful and intelligent officer of the undead",
+    cost: 2000,
+    rate: 100,
+    icon: "🧛",
+  },
+  {
+    name: "Pumpkin Lord",
+    description:
+      "Giant commander of Satans Army capable of unspeakable horrors",
+    cost: 10000,
+    rate: 1000,
+    icon: "🎃",
   },
 ];
 
@@ -101,7 +129,13 @@ const upgrades: incrementDemons[] = [];
 
 availableWarriors.forEach((Monster) =>
   upgrades.push(
-    new incrementDemons(Monster.cost, Monster.rate, Monster.name, Monster.icon),
+    new incrementDemons(
+      Monster.cost,
+      Monster.rate,
+      Monster.name,
+      Monster.icon,
+      Monster.description,
+    ),
   ),
 );
 
@@ -138,95 +172,3 @@ function IncrementCounter(step: number) {
 }
 
 requestAnimationFrame(tick);
-
-/*
-function tick(millis: number) {
-  const delta = millis - lastMillis;
-  lastMillis = millis;
-  if (counter >= gremlinCost) {
-    honorGuardButton.disabled = false;
-  } else honorGuardButton.disabled = true;
-  if (counter >= goblinCost) {
-    goblinButton.disabled = false;
-  } else goblinButton.disabled = true;
-  if (counter >= skeletonCost) {
-    skeletonButton.disabled = false;
-  } else skeletonButton.disabled = true;
-  counter += (growthRate * delta) / 1000;
-  honorGuardButton.innerHTML = `<font size = "+2">👹</font><br>Gremlins: ${gremlins}<br>Gremlin price: ${gremlinCost.toFixed(
-    2,
-  )}`;
-  goblinButton.innerHTML = `<font size = "+2">👺</font><br>Goblins: ${goblins}<br>Goblin price: ${goblinCost.toFixed(
-    2,
-  )}`;
-  skeletonButton.innerHTML = `<font size = "+2">💀</font><br>Skeletons: ${skeletons}<br>Skeleton price: ${skeletonCost.toFixed(
-    2,
-  )}`;
-  log.innerHTML = `Number of warriors: ${counter.toFixed(2)}`;
-  rate.innerHTML = `${growthRate.toFixed(2)} warriors joining per second`;
-  requestAnimationFrame(tick);
-}
-
-
-let gremlins = 0;
-let gremlinCost = 10;
-const honorGuardButton = document.createElement("button");
-honorGuardButton.innerHTML = `<font size = "+2">👹</font><br>Gremlins: ${gremlins}<br>Gremlin price: ${gremlinCost}`;
-honorGuardButton.disabled = true;
-
-honorGuardButton.addEventListener("click", () => {
-  gremlinCost *= 1.15;
-  gremlins++;
-  growthRate += 0.1;
-  if (counter >= gremlinCost) {
-    counter -= gremlinCost;
-    log.innerHTML = `Number of warriors: ${counter.toFixed(2)}`;
-  }
-});
-
-app.append(honorGuardButton);
-
-let goblins = 0;
-let goblinCost = 100;
-const goblinButton = document.createElement("button");
-goblinButton.disabled = true;
-goblinButton.innerHTML = `<font size = "+2">👺</font><br>Goblins: ${goblins}<br>Goblin price: ${goblinCost}`;
-
-goblinButton.addEventListener("click", () => {
-  goblinCost *= 1.15;
-  goblins++;
-  growthRate += 2;
-  if (counter >= goblinCost) {
-    counter -= goblinCost;
-    log.innerHTML = `Number of warriors: ${counter.toFixed(2)}`;
-  }
-});
-
-app.append(goblinButton);
-
-let skeletons = 0;
-let skeletonCost = 1000;
-const skeletonButton = document.createElement("button");
-skeletonButton.innerHTML = `<font size = "+2">💀</font><br>Skeletons: ${skeletons}<br>Skeleton price: ${skeletonCost}`;
-skeletonButton.disabled = true;
-
-skeletonButton.addEventListener("click", () => {
-  skeletonCost *= 1.15;
-  skeletons++;
-  growthRate += 50;
-  if (counter >= skeletonCost) {
-    counter -= skeletonCost;
-    log.innerHTML = `Number of warriors: ${counter.toFixed(2)}`;
-  }
-});
-
-app.append(skeletonButton);
-
-let lastMillis = 0;
-
-const log = document.createElement("p");
-log.innerHTML = `No Warriors!`;
-app.append(log);
-
-const rate = document.createElement("div");
-app.append(rate);*/
